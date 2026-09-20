@@ -27,11 +27,11 @@ void lookForNewFiles (const Config& config, std::unordered_map<std::string, bool
             files_mutex.unlock();
             continue;
         }
-        if (entry.is_regular_file() && name.extension().string() == ".mp4" && name.string().substr(0, file_name_size + 1) == config.file_name + config.file_counter) {
+        if (entry.is_regular_file() && name.extension().string() == ".mp4" && name.string().substr(0, file_name_size + 1) == config.file_name + config.file_counter && entry.file_size() >= config.file_size) {
             files[name.string()] = true;
             queue_mutex.lock();
             tasks_queue.push(name.string());
-            std::cout << "[Observation] " << name << " just appeared and added to queue.\n";
+            std::cout << "[Observation] " << name << " just appeared and added to queue with size: " << entry.file_size() << ".\n";
             queue_mutex.unlock();
         }
         files_mutex.unlock();
