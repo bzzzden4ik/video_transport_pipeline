@@ -55,3 +55,7 @@ g++ ./src/*.cpp ./app/* -std=c++20 -o ./build/vtp
 ```bash
 ./build/vtp
 ```
+
+### Troubleshooting
+* Problem: "httplib doesn't support Windows 8 or lower..."
+* Solution: add '-D_WIN32_WINNT=0x0A00 -lws2_32 -lcrypt32' flags to your compiler

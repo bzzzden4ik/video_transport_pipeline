@@ -10,7 +10,7 @@ void executeProgram(const std::string& path_name, bool& result_var) {
     result_var = result;
 }
 
-void taskObservation(bool& isRunning, std::queue<std::string>& tasks_queue, std::mutex& queue_mutex) {
+void taskObservation(bool& isRunning, const Config& config, std::queue<std::string>& tasks_queue, std::mutex& queue_mutex) {
     std::cout << "[System] Task Thread just started.\n";
     bool isTask = true;
     while (isRunning) {
@@ -22,7 +22,8 @@ void taskObservation(bool& isRunning, std::queue<std::string>& tasks_queue, std:
             tasks_queue.pop();
             queue_mutex.unlock();
             std::cout << "[Task] \"" << current_task << "\" | Starting\n";
-            executeProgram(current_task, result);
+            std::cout << getServerRes(config.path_name + current_task);
+            // executeProgram(current_task, result);
             std::cout << "[Task] \"" << current_task << "\" | Finished\n";
         } else {
             queue_mutex.unlock();
